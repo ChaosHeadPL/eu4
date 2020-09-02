@@ -1,8 +1,6 @@
 from eu4 import app, log, api
 from flask import jsonify, Response, request, render_template, flash
 from flask_restplus import Resource, fields, reqparse, inputs
-import numpy as np
-import pandas as pd
 from random import randrange
 import requests
 import json
@@ -44,6 +42,26 @@ def filter_data(data, args):
     if len(output) > 0:
         if args.get("random"):
             return [output[randrange(len(output))]]
+    
+    return output
+
+
+def filter_word(data, word):
+    output = []
+    for achiev in data:
+        if word.lower() in achiev.get("title").lower():
+            output.append(achiev)
+        elif word.lower() in achiev.get("description").lower():
+            output.append(achiev)
+        elif word.lower() in achiev.get("notes").lower():
+            output.append(achiev)
+        else:
+            for x in achiev.get("starting_conditions"):
+                if word.lower() in x.lower():
+                    output.append(achiev)
+            for x in achiev.get("requirements"):
+                if word.lower() in x.lower():
+                    output.append(achiev)
     
     return output
 
@@ -136,6 +154,7 @@ def index():
         args['difficult'] = form.difficult.data
         args['version'] = form.version.data
         args['random'] = form.random.data
+        args['word'] = form.word.data
         log.debug(f"Form args = {args}")
 
         data = get_map()

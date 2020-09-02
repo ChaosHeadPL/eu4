@@ -19,3 +19,4 @@ class FilteresForm(FlaskForm):
     version = StringField("version")
     random = BooleanField("random", default=False)
     submit = SubmitField("Filter")
+    word = StringField("achieved")

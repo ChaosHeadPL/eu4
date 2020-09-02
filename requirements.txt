@@ -1,0 +1,7 @@
+Flask==1.1.1
+Flask-SQLAlchemy==2.4.3
+Flask-WTF==0.14.3
+flask-restplus==0.13.0
+Werkzeug==0.16.0
+requests==2.22.0
+BeautifulSoup4==4.8.2
